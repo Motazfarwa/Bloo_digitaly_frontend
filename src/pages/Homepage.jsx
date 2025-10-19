@@ -174,10 +174,10 @@ const handleSubmit = async (e) => {
   }
 
   try {
-    const res = await fetch("http://localhost:5000/send-email", {
-      method: "POST",
-      body: data,
-    });
+    const res = await fetch(`${process.env.REACT_APP_API_URL}/send-email`, {
+     method: "POST",
+     body: data,
+     });
     const result = await res.json();
     alert(result.message);
 
