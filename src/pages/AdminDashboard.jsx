@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Users, Search, FileText, X, Download, Mail, Phone, Linkedin, Calendar, Globe, MessageSquare, CreditCard, FileCheck } from "lucide-react";
+import './AdminDashboard.css'
 
 const AdminDashboard = () => {
   const [users, setUsers] = useState([]);
