@@ -20,7 +20,7 @@ const AdminDashboard = () => {
   const fetchUsers = async () => {
     try {
       const res = await fetch(
-        `http://localhost:5000/candidates?page=${page}&limit=${limit}`
+        `${process.env.REACT_APP_API_URL}/candidates?page=${page}&limit=${limit}`
       );
       const data = await res.json();
       const candidates = data.candidates || data;
