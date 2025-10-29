@@ -13,7 +13,7 @@ const AdminDashboard = () => {
   useEffect(() => {
     const fetchCandidates = async () => {
       try {
-        const response = await axios.get(`${process.env.REACT_APP_API_URL}/api/candidates`);
+        const response = await axios.get(`${process.env.REACT_APP_API_URL}/candidates`);
         setCandidates(response.data);
       } catch (error) {
         console.error("Error fetching candidates:", error);
