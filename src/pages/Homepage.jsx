@@ -100,7 +100,6 @@ const Homepage = () => {
     dateNaissance: "",
     message: "",
     files: [],
-    service: "",
   }));
 
   // Scroll to the contact form
