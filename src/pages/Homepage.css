@@ -1202,7 +1202,7 @@ section {
   margin-top: 4px;
   display: block;
 }
-.contact-form-modern .input-group select[name="serviceType"] {
+.contact-form-modern .input-group select[name="service"] {
   margin-bottom: 30px; /* adjust spacing as needed */
 }
 .contact-form-modern textarea[name="message"] {
