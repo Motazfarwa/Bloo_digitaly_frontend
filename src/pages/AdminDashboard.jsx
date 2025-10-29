@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import "./AdminDashboard.css";
 
 const AdminDashboard = () => {
   const [candidates, setCandidates] = useState([]);
@@ -11,13 +10,10 @@ const AdminDashboard = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const candidatesPerPage = 6;
 
-  // Fetch candidates from backend
   useEffect(() => {
     const fetchCandidates = async () => {
       try {
-        const response = await axios.get(
-          `${process.env.REACT_APP_API_URL}/api/candidates`
-        );
+        const response = await axios.get(`${process.env.REACT_APP_API_URL}/api/candidates`);
         setCandidates(response.data);
       } catch (error) {
         console.error("Error fetching candidates:", error);
@@ -26,83 +22,185 @@ const AdminDashboard = () => {
     fetchCandidates();
   }, []);
 
-  // Filter by search term
   const filteredCandidates = candidates.filter(
     (candidate) =>
       candidate.fullName.toLowerCase().includes(searchTerm.toLowerCase()) ||
       candidate.email.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
-  // Pagination logic
   const totalPages = Math.ceil(filteredCandidates.length / candidatesPerPage);
   const startIndex = (currentPage - 1) * candidatesPerPage;
-  const currentCandidates = filteredCandidates.slice(
-    startIndex,
-    startIndex + candidatesPerPage
-  );
+  const currentCandidates = filteredCandidates.slice(startIndex, startIndex + candidatesPerPage);
+
+  // Inline styles
+  const styles = {
+    container: { display: "flex", minHeight: "100vh", fontFamily: "Inter, sans-serif", background: "#f3f4f6" },
+    sidebar: {
+      backgroundColor: "#111827",
+      color: "white",
+      width: sidebarOpen ? "250px" : "0",
+      overflow: "hidden",
+      transition: "width 0.3s ease",
+    },
+    sidebarHeader: { display: "flex", justifyContent: "space-between", alignItems: "center", padding: "1rem", fontWeight: "bold", fontSize: "1.2rem" },
+    toggleSidebar: { background: "none", border: "none", color: "white", fontSize: "1.2rem", cursor: "pointer" },
+    sidebarLinks: { listStyle: "none", padding: 0, margin: "1rem 0" },
+    sidebarLinkItem: { padding: "0.75rem 1rem", cursor: "pointer", transition: "background 0.3s ease" },
+    main: { flex: 1, padding: "2rem" },
+    title: { fontSize: "2rem", fontWeight: "700", marginBottom: "1.5rem" },
+    searchInput: {
+      padding: "0.5rem 0.75rem",
+      border: "1px solid #d1d5db",
+      borderRadius: "0.5rem",
+      marginBottom: "1rem",
+      width: "100%",
+      maxWidth: "400px",
+      outline: "none",
+    },
+    tableContainer: {
+      overflowX: "auto",
+      background: "white",
+      borderRadius: "0.5rem",
+      boxShadow: "0 4px 12px rgba(0,0,0,0.05)",
+    },
+    table: { width: "100%", borderCollapse: "collapse" },
+    th: {
+      padding: "0.75rem 1rem",
+      textAlign: "left",
+      backgroundColor: "#f9fafb",
+      color: "#6b7280",
+      fontWeight: "600",
+      textTransform: "uppercase",
+      letterSpacing: "0.05em",
+    },
+    td: { padding: "0.75rem 1rem", textAlign: "left" },
+    btnView: {
+      color: "#3b82f6",
+      fontWeight: "600",
+      background: "none",
+      border: "none",
+      cursor: "pointer",
+      transition: "color 0.2s ease-in-out",
+    },
+    btnDownload: {
+      display: "inline-block",
+      marginTop: "0.5rem",
+      padding: "0.5rem 1rem",
+      backgroundColor: "#3b82f6",
+      color: "white",
+      borderRadius: "0.5rem",
+      textDecoration: "none",
+      fontWeight: "600",
+    },
+    btnClose: {
+      marginTop: "1rem",
+      padding: "0.5rem 1rem",
+      backgroundColor: "#d1d5db",
+      color: "#374151",
+      border: "none",
+      borderRadius: "0.5rem",
+      fontWeight: "600",
+      cursor: "pointer",
+    },
+    pagination: { display: "flex", justifyContent: "center", marginTop: "1rem" },
+    paginationBtn: {
+      margin: "0 0.25rem",
+      padding: "0.5rem 0.75rem",
+      borderRadius: "0.375rem",
+      border: "none",
+      cursor: "pointer",
+      backgroundColor: "#e5e7eb",
+      color: "#374151",
+      transition: "all 0.2s ease-in-out",
+    },
+    modalBackdrop: {
+      position: "fixed",
+      inset: 0,
+      background: "rgba(0, 0, 0, 0.5)",
+      display: "flex",
+      justifyContent: "center",
+      alignItems: "center",
+      zIndex: 50,
+    },
+    modal: {
+      background: "white",
+      padding: "2rem",
+      borderRadius: "0.75rem",
+      width: "90%",
+      maxWidth: "600px",
+      maxHeight: "90%",
+      overflowY: "auto",
+      boxShadow: "0 10px 25px rgba(0, 0, 0, 0.1)",
+    },
+    modalTitle: { fontSize: "1.5rem", fontWeight: "700", marginBottom: "1rem" },
+    fileItem: {
+      backgroundColor: "#f9fafb",
+      border: "1px solid #e5e7eb",
+      borderRadius: "0.5rem",
+      padding: "1rem",
+      marginBottom: "0.75rem",
+    },
+    fileActions: { display: "flex", gap: "0.5rem", marginTop: "0.75rem", alignItems: "center" },
+  };
 
   return (
-    <div className="dashboard-container">
+    <div style={styles.container}>
       {/* Sidebar */}
-      <div className={`sidebar ${sidebarOpen ? "sidebar-open" : ""}`}>
-        <div className="sidebar-header">
+      <div style={styles.sidebar}>
+        <div style={styles.sidebarHeader}>
           <span>Admin Panel</span>
-          <button
-            className="toggle-sidebar"
-            onClick={() => setSidebarOpen(!sidebarOpen)}
-          >
+          <button style={styles.toggleSidebar} onClick={() => setSidebarOpen(!sidebarOpen)}>
             ☰
           </button>
         </div>
-        <ul className="sidebar-links">
-          <li>Dashboard</li>
-          <li>Candidates</li>
-          <li>Settings</li>
+        <ul style={styles.sidebarLinks}>
+          {["Dashboard", "Candidates", "Settings"].map((link) => (
+            <li
+              key={link}
+              style={styles.sidebarLinkItem}
+              onMouseEnter={(e) => (e.currentTarget.style.backgroundColor = "#1f2937")}
+              onMouseLeave={(e) => (e.currentTarget.style.backgroundColor = "transparent")}
+            >
+              {link}
+            </li>
+          ))}
         </ul>
       </div>
 
-      {/* Main Content */}
-      <div className="main-content">
-        <h1>Candidate Applications</h1>
+      {/* Main */}
+      <div style={styles.main}>
+        <h1 style={styles.title}>Candidate Applications</h1>
 
         <input
           type="text"
-          className="search-input"
           placeholder="Search by name or email..."
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
+          style={styles.searchInput}
         />
 
-        <div className="table-container">
-          <table>
+        <div style={styles.tableContainer}>
+          <table style={styles.table}>
             <thead>
               <tr>
-                <th>Full Name</th>
-                <th>Email</th>
-                <th>Phone</th>
-                <th>Service</th>
-                <th>Country</th>
-                <th>Actions</th>
+                {["Full Name", "Email", "Phone", "Service", "Country", "Actions"].map((h) => (
+                  <th key={h} style={styles.th}>{h}</th>
+                ))}
               </tr>
             </thead>
             <tbody>
               {currentCandidates.length > 0 ? (
                 currentCandidates.map((candidate) => (
                   <tr key={candidate._id}>
-                    <td>{candidate.fullName}</td>
-                    <td>{candidate.email}</td>
-                    <td>{candidate.phone || "-"}</td>
-                    <td>{candidate.poste || candidate.service || "-"}</td>
-                    <td>
-                      {candidate.interestedCountries?.length > 0
-                        ? candidate.interestedCountries.join(", ")
-                        : "-"}
+                    <td style={styles.td}>{candidate.fullName}</td>
+                    <td style={styles.td}>{candidate.email}</td>
+                    <td style={styles.td}>{candidate.phone || "-"}</td>
+                    <td style={styles.td}>{candidate.poste || candidate.service || "-"}</td>
+                    <td style={styles.td}>
+                      {candidate.interestedCountries?.length > 0 ? candidate.interestedCountries.join(", ") : "-"}
                     </td>
-                    <td>
-                      <button
-                        className="btn-view"
-                        onClick={() => setSelectedCandidate(candidate)}
-                      >
+                    <td style={styles.td}>
+                      <button style={styles.btnView} onClick={() => setSelectedCandidate(candidate)}>
                         View
                       </button>
                     </td>
@@ -110,7 +208,7 @@ const AdminDashboard = () => {
                 ))
               ) : (
                 <tr>
-                  <td colSpan="6" style={{ textAlign: "center" }}>
+                  <td colSpan="6" style={{ textAlign: "center", padding: "1rem" }}>
                     No candidates found.
                   </td>
                 </tr>
@@ -121,26 +219,30 @@ const AdminDashboard = () => {
 
         {/* Pagination */}
         {totalPages > 1 && (
-          <div className="pagination">
+          <div style={styles.pagination}>
             <button
+              style={styles.paginationBtn}
               onClick={() => setCurrentPage((p) => Math.max(p - 1, 1))}
               disabled={currentPage === 1}
             >
               Prev
             </button>
-            {[...Array(totalPages)].map((_, index) => (
+            {[...Array(totalPages)].map((_, i) => (
               <button
-                key={index}
-                className={currentPage === index + 1 ? "page-active" : ""}
-                onClick={() => setCurrentPage(index + 1)}
+                key={i}
+                style={{
+                  ...styles.paginationBtn,
+                  backgroundColor: currentPage === i + 1 ? "#3b82f6" : "#e5e7eb",
+                  color: currentPage === i + 1 ? "white" : "#374151",
+                }}
+                onClick={() => setCurrentPage(i + 1)}
               >
-                {index + 1}
+                {i + 1}
               </button>
             ))}
             <button
-              onClick={() =>
-                setCurrentPage((p) => Math.min(p + 1, totalPages))
-              }
+              style={styles.paginationBtn}
+              onClick={() => setCurrentPage((p) => Math.min(p + 1, totalPages))}
               disabled={currentPage === totalPages}
             >
               Next
@@ -151,84 +253,54 @@ const AdminDashboard = () => {
 
       {/* Candidate Modal */}
       {selectedCandidate && (
-        <div
-          className="modal-backdrop"
-          onClick={() => setSelectedCandidate(null)}
-        >
-          <div className="modal" onClick={(e) => e.stopPropagation()}>
-            <h2>{selectedCandidate.fullName}</h2>
-            <p>
-              <strong>Email:</strong> {selectedCandidate.email}
-            </p>
-            <p>
-              <strong>Phone:</strong> {selectedCandidate.phone || "N/A"}
-            </p>
-            <p>
-              <strong>Service:</strong>{" "}
-              {selectedCandidate.poste || selectedCandidate.service || "N/A"}
-            </p>
-            <p>
-              <strong>LinkedIn:</strong>{" "}
+        <div style={styles.modalBackdrop} onClick={() => setSelectedCandidate(null)}>
+          <div style={styles.modal} onClick={(e) => e.stopPropagation()}>
+            <h2 style={styles.modalTitle}>{selectedCandidate.fullName}</h2>
+            <p><strong>Email:</strong> {selectedCandidate.email}</p>
+            <p><strong>Phone:</strong> {selectedCandidate.phone || "N/A"}</p>
+            <p><strong>Service:</strong> {selectedCandidate.poste || "N/A"}</p>
+            <p><strong>LinkedIn:</strong>{" "}
               {selectedCandidate.linkedin ? (
-                <a
-                  href={selectedCandidate.linkedin}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
+                <a href={selectedCandidate.linkedin} target="_blank" rel="noreferrer">
                   {selectedCandidate.linkedin}
                 </a>
-              ) : (
-                "N/A"
-              )}
+              ) : "N/A"}
             </p>
-            <p>
-              <strong>Message:</strong>{" "}
-              {selectedCandidate.message || "No message provided."}
-            </p>
+            <p><strong>Message:</strong> {selectedCandidate.message || "No message provided."}</p>
 
             <h3>Uploaded Files</h3>
-            {selectedCandidate.files && selectedCandidate.files.length > 0 ? (
-              <div className="file-list">
-                {selectedCandidate.files.map((file, index) => (
-                  <div key={index} className="file-item">
-                    <p>
-                      <strong>File:</strong> {file.filename}
-                    </p>
-                    <p>
-                      <strong>Type:</strong> {file.contentType}
-                    </p>
-                    <div className="file-actions">
-                      <button
-                        className="btn-view"
-                        onClick={() =>
-                          setPreviewFile({
-                            url: `${process.env.REACT_APP_API_URL}/${file.path}`,
-                            type: file.contentType,
-                            name: file.filename,
-                          })
-                        }
-                      >
-                        Preview
-                      </button>
-                      <a
-                        href={`${process.env.REACT_APP_API_URL}/${file.path}`}
-                        download={file.filename}
-                        className="btn-download"
-                      >
-                        Download
-                      </a>
-                    </div>
+            {selectedCandidate.files?.length > 0 ? (
+              selectedCandidate.files.map((file, idx) => (
+                <div key={idx} style={styles.fileItem}>
+                  <p><strong>File:</strong> {file.filename}</p>
+                  <p><strong>Type:</strong> {file.contentType}</p>
+                  <div style={styles.fileActions}>
+                    <button
+                      style={styles.btnView}
+                      onClick={() =>
+                        setPreviewFile({
+                          url: `${process.env.REACT_APP_API_URL}/${file.path}`,
+                          type: file.contentType,
+                          name: file.filename,
+                        })
+                      }
+                    >
+                      Preview
+                    </button>
+                    <a
+                      href={`${process.env.REACT_APP_API_URL}/${file.path}`}
+                      download={file.filename}
+                      style={styles.btnDownload}
+                    >
+                      Download
+                    </a>
                   </div>
-                ))}
-              </div>
+                </div>
+              ))
             ) : (
               <p>No documents uploaded.</p>
             )}
-
-            <button
-              onClick={() => setSelectedCandidate(null)}
-              className="btn-close"
-            >
+            <button style={styles.btnClose} onClick={() => setSelectedCandidate(null)}>
               Close
             </button>
           </div>
@@ -237,29 +309,17 @@ const AdminDashboard = () => {
 
       {/* File Preview Modal */}
       {previewFile && (
-        <div className="modal-backdrop" onClick={() => setPreviewFile(null)}>
-          <div className="modal" onClick={(e) => e.stopPropagation()}>
-            <h2>{previewFile.name}</h2>
+        <div style={styles.modalBackdrop} onClick={() => setPreviewFile(null)}>
+          <div style={styles.modal} onClick={(e) => e.stopPropagation()}>
+            <h2 style={styles.modalTitle}>{previewFile.name}</h2>
             {previewFile.type.includes("pdf") ? (
-              <iframe
-                src={previewFile.url}
-                title="PDF Preview"
-                style={{ width: "100%", height: "600px", borderRadius: "8px" }}
-              />
+              <iframe src={previewFile.url} title="PDF" style={{ width: "100%", height: "600px", borderRadius: "8px" }} />
             ) : previewFile.type.includes("image") ? (
-              <img
-                src={previewFile.url}
-                alt="Preview"
-                style={{
-                  maxWidth: "100%",
-                  borderRadius: "8px",
-                  marginBottom: "1rem",
-                }}
-              />
+              <img src={previewFile.url} alt="Preview" style={{ maxWidth: "100%", borderRadius: "8px" }} />
             ) : (
               <p>Preview not available for this file type.</p>
             )}
-            <button onClick={() => setPreviewFile(null)} className="btn-close">
+            <button style={styles.btnClose} onClick={() => setPreviewFile(null)}>
               Close
             </button>
           </div>
