@@ -24,6 +24,7 @@ const Homepage = () => {
     interestedCountries: "",
     dateNaissance: "",
     acceptTerms: false,
+    service: "",
   });
   const [dobError, setDobError] = useState("");
   const [phoneError, setPhoneError] = useState("");
@@ -82,11 +83,11 @@ const Homepage = () => {
   }, []);
 
 
-  const scrollToService = (serviceType) => {
+  const scrollToService = (service) => {
   // Set the form's service type
   setFormData((prev) => ({
     ...prev,
-    serviceType,
+    service,
     packType: "",
     fullName: "",
     email: "",
@@ -99,6 +100,7 @@ const Homepage = () => {
     dateNaissance: "",
     message: "",
     files: [],
+    service: "",
   }));
 
   // Scroll to the contact form
@@ -120,7 +122,7 @@ const handleChange = (e) => {
     }
   }
 
-  if (name === "dateNaissance" && formData.serviceType === "Volunteer Registration") {
+  if (name === "dateNaissance" && formData.service === "Volunteer Registration") {
     const birthDate = new Date(value);
     const today = new Date();
     let age = today.getFullYear() - birthDate.getFullYear();
@@ -198,6 +200,7 @@ const handleSubmit = async (e) => {
       dateNaissance: "",
       acceptTerms: false,
       files: [], // reset files
+      service: "",
     });
   } catch (err) {
     console.error(err);
@@ -475,14 +478,14 @@ const handleSubmit = async (e) => {
       {/* Step 1: Select Service */}
       <div className="input-group">
         <select
-          name="serviceType"
-          value={formData.serviceType || ""}
+          name="service"
+          value={formData.service || ""}
           onChange={(e) => {
             handleChange(e);
             // Reset dependent fields
             setFormData({
               ...formData,
-              serviceType: e.target.value,
+              service: e.target.value,
               packType: "",
               fullName: "",
               email: "",
@@ -508,7 +511,7 @@ const handleSubmit = async (e) => {
       </div>
 
       {/* Step 3: Show common fields */}
-      {formData.serviceType && (
+      {formData.service && (
         <>
           <div className="form-row">
             <div className="input-group">
@@ -559,7 +562,7 @@ const handleSubmit = async (e) => {
           </div>
 
          {/* Job Search Specific Field */}
-{formData.serviceType === "Job Search" && (
+{formData.service === "Job Search" && (
   <div className="form-row">
     <div className="input-group">
       <input
@@ -575,7 +578,7 @@ const handleSubmit = async (e) => {
 )}
 
        {/* Services with language and birth fields */}
-{["Job Search", "Study Abroad", "Volunteer Registration"].includes(formData.serviceType) && (
+{["Job Search", "Study Abroad", "Volunteer Registration"].includes(formData.service) && (
   <>
     {/* Common Fields for these services */}
     <div className="form-row">
@@ -587,11 +590,11 @@ const handleSubmit = async (e) => {
           name="dateNaissance"
           value={formData.dateNaissance}
           onChange={handleChange}
-          required={formData.serviceType === "Volunteer Registration"}
+          required={formData.service === "Volunteer Registration"}
           className={dobError ? "input-error" : ""}
         />
         <label>Date of Birth</label>
-        {dobError && formData.serviceType === "Volunteer Registration" && (
+        {dobError && formData.service === "Volunteer Registration" && (
           <span className="error-text">{dobError}</span>
         )}
       </div>
