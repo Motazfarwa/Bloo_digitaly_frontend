@@ -159,7 +159,13 @@ const AdminDashboard = () => {
                 <p><strong>File:</strong> {file.filename}</p>
                 <p><strong>Type:</strong> {file.contentType}</p>
                 <div style={styles.fileActions}>
-                  <button style={styles.btnView} onClick={() => setPreviewFile({ url: `${process.env.REACT_APP_API_URL.replace(/\/$/, "")}/${file.path}`, type: file.contentType, name: file.filename })}>Preview</button>
+                  <button style={styles.btnView}  onClick={() =>
+                 setPreviewFile({
+                  url: `${process.env.REACT_APP_API_URL}/uploads/${file.filename}`,
+                  type: file.contentType,
+                 name: file.filename
+                  })
+               }>Preview</button>
                   <a href={`${process.env.REACT_APP_API_URL.replace(/\/$/, "")}/${file.path}`} download={file.filename} style={styles.btnDownload}>Download</a>
                 </div>
               </div>
