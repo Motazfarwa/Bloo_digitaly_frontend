@@ -27,6 +27,13 @@ const AdminDashboard = () => {
       c.fullName.toLowerCase().includes(searchTerm.toLowerCase()) ||
       c.email.toLowerCase().includes(searchTerm.toLowerCase())
   );
+  // Group candidates by service
+  const groupedByService = filteredCandidates.reduce((acc, candidate) => {
+  const service = candidate.service || candidate.poste || "Other";
+  if (!acc[service]) acc[service] = [];
+  acc[service].push(candidate);
+  return acc;
+  }, {});
 
   const totalPages = Math.ceil(filteredCandidates.length / candidatesPerPage);
   const startIndex = (currentPage - 1) * candidatesPerPage;
@@ -85,22 +92,39 @@ const AdminDashboard = () => {
             <thead>
               <tr>{["Full Name", "Email", "Phone", "Service", "Country", "Actions"].map((h) => <th key={h} style={styles.th}>{h}</th>)}</tr>
             </thead>
-            <tbody>
-              {currentCandidates.length > 0 ? currentCandidates.map((c) => (
-                <tr key={c._id}>
-                  <td style={styles.td}>{c.fullName}</td>
-                  <td style={styles.td}>{c.email}</td>
-                  <td style={styles.td}>{c.phone || "-"}</td>
-                  <td style={styles.td}>{c.poste || c.service || "-"}</td>
-                  <td style={styles.td}>{c.interestedCountries?.length ? c.interestedCountries.join(", ") : "-"}</td>
-                  <td style={styles.td}>
-                    <button style={styles.btnView} onClick={() => setSelectedCandidate(c)}>View</button>
-                  </td>
-                </tr>
-              )) : (
-                <tr><td colSpan="6" style={{ textAlign: "center", padding: "1rem" }}>No candidates found.</td></tr>
-              )}
-            </tbody>
+         <tbody>
+         {Object.keys(groupedByService).length > 0 ? (
+          Object.entries(groupedByService).map(([service, candidates]) => (
+          <React.Fragment key={service}>
+          {/* Service Group Header */}
+         <tr>
+          <td colSpan="6" style={{ background: "#e5e7eb", fontWeight: "bold", padding: "0.75rem 1rem" }}>
+            {service}
+          </td>
+          </tr>
+
+        {/* Candidates in this service */}
+        {candidates.slice(startIndex, startIndex + candidatesPerPage).map((c) => (
+          <tr key={c._id}>
+            <td style={styles.td}>{c.fullName}</td>
+            <td style={styles.td}>{c.email}</td>
+            <td style={styles.td}>{c.phone || "-"}</td>
+            <td style={styles.td}>{c.service || c.poste || "-"}</td>
+            <td style={styles.td}>{c.interestedCountries?.length ? c.interestedCountries.join(", ") : "-"}</td>
+            <td style={styles.td}>
+              <button style={styles.btnView} onClick={() => setSelectedCandidate(c)}>View</button>
+            </td>
+           </tr>
+        ))}
+          </React.Fragment>
+            ))
+          ) : (
+         <tr>
+          <td colSpan="6" style={{ textAlign: "center", padding: "1rem" }}>No candidates found.</td>
+         </tr>
+          )}
+         </tbody>
+
           </table>
         </div>
 
