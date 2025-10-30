@@ -311,7 +311,7 @@
 }
 
 .title-line.accent {
-  background: var(--gradient-secondary);
+  background: #66B3E1;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
