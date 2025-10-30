@@ -288,30 +288,6 @@ const AdminDashboard = () => {
                 👁️ Preview
               </button>
 
-            <a
-             href={`${process.env.REACT_APP_API_URL.replace(/\/$/, "")}/uploads/${file.filename}`}
-            download={file.filename}
-            style={{
-            background: "linear-gradient(90deg, #16a34a, #22c55e)",
-            color: "white",
-            padding: "8px 16px",
-            borderRadius: "10px",
-            fontSize: "0.95rem",
-            fontWeight: "500",
-            textDecoration: "none",
-            display: "inline-block",
-            transition: "all 0.3s ease",
-             }}
-            onMouseEnter={(e) =>
-            (e.target.style.background = "linear-gradient(90deg, #15803d, #16a34a)")
-            }
-            onMouseLeave={(e) =>
-            (e.target.style.background = "linear-gradient(90deg, #16a34a, #22c55e)")
-           }
-           >
-             ⬇ Download
-            </a>
-
             </div>
           </div>
         ))
