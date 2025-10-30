@@ -69,26 +69,6 @@ const AdminDashboard = () => {
 
   return (
     <div style={styles.container}>
-      {/* Sidebar */}
-      <div style={styles.sidebar}>
-        <div style={styles.sidebarHeader}>
-          <span>Admin Panel</span>
-          <button style={styles.toggleSidebar} onClick={() => setSidebarOpen(!sidebarOpen)}>☰</button>
-        </div>
-        <ul style={styles.sidebarLinks}>
-          {["Dashboard", "Candidates", "Settings"].map((link) => (
-            <li
-              key={link}
-              style={styles.sidebarLinkItem}
-              onMouseEnter={(e) => (e.currentTarget.style.backgroundColor = "#1f2937")}
-              onMouseLeave={(e) => (e.currentTarget.style.backgroundColor = "transparent")}
-            >
-              {link}
-            </li>
-          ))}
-        </ul>
-      </div>
-
       {/* Main */}
       <div style={styles.main}>
         <h1 style={styles.title}>Candidate Applications</h1>
