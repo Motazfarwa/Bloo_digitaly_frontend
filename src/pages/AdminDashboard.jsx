@@ -176,26 +176,132 @@ const AdminDashboard = () => {
       )}
 
       {/* File Preview Modal */}
-      {previewFile && (
-        <div style={styles.modalBackdrop} onClick={() => setPreviewFile(null)}>
-          <div style={styles.modal} onClick={(e) => e.stopPropagation()}>
-            <h2 style={styles.modalTitle}>{previewFile.name}</h2>
-            {previewFile.type.includes("pdf") ? (
-              <object data={previewFile.url} type="application/pdf" width="100%" height="600px">
-                <p>
-                  PDF preview not available.{" "}
-                  <a href={previewFile.url} target="_blank" rel="noreferrer">Download</a>
-                </p>
-              </object>
-            ) : previewFile.type.includes("image") ? (
-              <img src={previewFile.url} alt="Preview" style={{ maxWidth: "100%", borderRadius: "8px" }} />
-            ) : (
-              <p>Preview not available for this file type.</p>
-            )}
-            <button style={styles.btnClose} onClick={() => setPreviewFile(null)}>Close</button>
-          </div>
-        </div>
-      )}
+       {previewFile && (
+  <div
+    style={{
+      position: "fixed",
+      top: 0,
+      left: 0,
+      width: "100vw",
+      height: "100vh",
+      backgroundColor: "rgba(0,0,0,0.5)",
+      display: "flex",
+      alignItems: "center",
+      justifyContent: "center",
+      backdropFilter: "blur(6px)",
+      zIndex: 1000,
+      animation: "fadeIn 0.3s ease-in-out",
+    }}
+    onClick={() => setPreviewFile(null)}
+  >
+    <div
+      style={{
+        background: "linear-gradient(135deg, #ffffff, #f9fafb)",
+        borderRadius: "20px",
+        width: "80%",
+        maxWidth: "800px",
+        boxShadow: "0 8px 32px rgba(0,0,0,0.2)",
+        padding: "25px",
+        position: "relative",
+        animation: "slideUp 0.4s ease",
+      }}
+      onClick={(e) => e.stopPropagation()}
+    >
+      {/* Close Button */}
+      <button
+        onClick={() => setPreviewFile(null)}
+        style={{
+          position: "absolute",
+          top: "15px",
+          right: "15px",
+          background: "transparent",
+          border: "none",
+          fontSize: "20px",
+          cursor: "pointer",
+          color: "#555",
+          transition: "color 0.3s ease",
+        }}
+        onMouseEnter={(e) => (e.target.style.color = "#2563eb")}
+        onMouseLeave={(e) => (e.target.style.color = "#555")}
+      >
+        ✕
+      </button>
+
+      {/* Title */}
+      <h2
+        style={{
+          textAlign: "center",
+          fontSize: "1.4rem",
+          fontWeight: "600",
+          marginBottom: "20px",
+          color: "#1e293b",
+          borderBottom: "2px solid #e2e8f0",
+          paddingBottom: "10px",
+        }}
+      >
+        {previewFile.name}
+      </h2>
+
+      {/* File Preview */}
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          borderRadius: "12px",
+          background: "#f8fafc",
+          padding: "15px",
+          height: "600px",
+          overflow: "hidden",
+        }}
+      >
+        {previewFile.type.includes("pdf") ? (
+          <object
+            data={previewFile.url}
+            type="application/pdf"
+            width="100%"
+            height="100%"
+            style={{ borderRadius: "12px", border: "1px solid #e2e8f0" }}
+          >
+            <p style={{ textAlign: "center", color: "#475569" }}>
+              PDF preview not available.{" "}
+              <a
+                href={previewFile.url}
+                target="_blank"
+                rel="noreferrer"
+                style={{ color: "#2563eb", fontWeight: "500" }}
+              >
+                Download
+              </a>
+            </p>
+          </object>
+        ) : previewFile.type.includes("image") ? (
+          <img
+            src={previewFile.url}
+            alt="Preview"
+            style={{
+              maxWidth: "100%",
+              maxHeight: "100%",
+              borderRadius: "12px",
+              objectFit: "contain",
+            }}
+          />
+        ) : (
+          <p
+            style={{
+              fontSize: "1rem",
+              color: "#475569",
+              textAlign: "center",
+            }}
+          >
+            Preview not available for this file type.
+          </p>
+        )}
+      </div>
+    </div>
+  </div>
+)}
+
     </div>
   );
 };
