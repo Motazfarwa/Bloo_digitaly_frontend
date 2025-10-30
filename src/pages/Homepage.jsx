@@ -30,11 +30,11 @@ const Homepage = () => {
   const [phoneError, setPhoneError] = useState("");
   const [scroll, setScroll] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
-  const [activeSection, setActiveSection] = useState("hero");
+  const [activeSection, setActiveSection] = useState("Home");
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   const sectionRefs = {
-    hero: useRef(null),
+    Home: useRef(null),
     about: useRef(null),
     services: useRef(null),
     portfolio: useRef(null),
@@ -220,7 +220,7 @@ const handleSubmit = async (e) => {
           </div>
 
           <ul className={`nav-links ${menuOpen ? "nav-active" : ""}`}>
-            {['hero', 'about', 'services', 'portfolio', 'contact'].map(section => (
+            {['Home', 'about', 'services', 'portfolio', 'contact'].map(section => (
               <li key={section}>
                 <a 
                   href={`#${section}`} 
@@ -240,29 +240,29 @@ const handleSubmit = async (e) => {
         </div>
       </nav>
 
-      {/* Enhanced Hero Section */}
-      <section id="hero" className="hero" ref={sectionRefs.hero}>
-        <div className="hero-background">
+      {/* Enhanced Home Section */}
+      <section id="Home" className="Home" ref={sectionRefs.Home}>
+        <div className="Home-background">
           <div className="floating-shapes">
             <div className="shape shape-1"></div>
             <div className="shape shape-2"></div>
             <div className="shape shape-3"></div>
           </div>
         </div>
-        <div className="hero-content">
-          <div className="hero-text">
-            <h1 className="hero-title">
+        <div className="Home-content">
+          <div className="Home-text">
+            <h1 className="Home-title">
               <span className="title-line">Bloo</span>
               <span className="title-line accent">Digitally</span>
             </h1>
-            <p className="hero-subtitle">
+            <p className="Home-subtitle">
               Empowering your career and train global education dreams-expert 
             </p>
 
-             <p className="hero-subtitle">
+             <p className="Home-subtitle">
               Guidance in job placement and study aboard opportunities
             </p>
-            <div className="hero-buttons">
+            <div className="Home-buttons">
               <a href="#contact" className="btn-primary pulse">
                 Get Started
               </a>
@@ -271,8 +271,8 @@ const handleSubmit = async (e) => {
               </a>
             </div>
           </div>
-<div className="hero-visual">
-  <img src={bloo1} alt="Digital Consulting" className="hero-img" />
+<div className="Home-visual">
+  <img src={bloo1} alt="Digital Consulting" className="Home-img" />
 
   <div className="floating-card card-1" onClick={() => scrollToService("Study Abroad")}>
     <span>🚀 Study Abroad Scholarship Inscription</span>
@@ -757,7 +757,7 @@ const handleSubmit = async (e) => {
             <div className="footer-links">
               <div className="footer-column">
                 <h4>Quick Links</h4>
-                <a href="#hero">Home</a>
+                <a href="#Home">Home</a>
                 <a href="#about">About</a>
                 <a href="#services">Services</a>
               </div>
