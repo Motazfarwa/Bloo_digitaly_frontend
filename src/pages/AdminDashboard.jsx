@@ -277,6 +277,36 @@ const AdminDashboard = () => {
       <div style={{ lineHeight: "1.8", fontSize: "1rem", marginBottom: "20px" }}>
         <p><strong>Email:</strong> {selectedCandidate.email}</p>
         <p><strong>Phone:</strong> {selectedCandidate.phone || "N/A"}</p>
+        {/* Languages */}
+         {selectedCandidate.languages && (
+       <div
+           style={{
+           background: "#f8fafc",
+          borderRadius: "12px",
+          padding: "12px 18px",
+          marginBottom: "20px",
+          boxShadow: "inset 0 1px 2px rgba(0,0,0,0.05)",
+         }}
+           >
+         <h3
+          style={{
+         fontSize: "1.2rem",
+         fontWeight: "600",
+         color: "#1e3a8a",
+          marginBottom: "10px",
+          }}
+             >
+          🌐 Languages
+          </h3>
+
+         {Object.entries(selectedCandidate.languages).map(([lang, level], idx) => (
+          <p key={idx} style={{ margin: 0, lineHeight: "1.6", color: "#334155" }}>
+        <strong style={{ textTransform: "capitalize" }}>{lang}:</strong> {level || "N/A"}
+      </p>
+    ))}
+   </div>
+     )}
+
         <p>
           <strong>LinkedIn:</strong>{" "}
           {selectedCandidate.linkedin ? (
