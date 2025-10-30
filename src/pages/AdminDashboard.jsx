@@ -174,16 +174,15 @@ const AdminDashboard = () => {
           ></td>
         </tr>
       </React.Fragment>
-    ))
-  ) : (
-    <tr>
-      <td colSpan="6" style={{ textAlign: "center", padding: "1rem" }}>
-        No candidates found.
-      </td>
-    </tr>
-  )}
-</tbody>
-
+          ))
+         ) : (
+        <tr>
+        <td colSpan="6" style={{ textAlign: "center", padding: "1rem" }}>
+            No candidates found.
+           </td>
+           </tr>
+             )}
+           </tbody>
 
           </table>
         </div>
