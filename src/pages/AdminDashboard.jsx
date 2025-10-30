@@ -92,38 +92,98 @@ const AdminDashboard = () => {
             <thead>
               <tr>{["Full Name", "Email", "Phone", "Service", "Country", "Actions"].map((h) => <th key={h} style={styles.th}>{h}</th>)}</tr>
             </thead>
-         <tbody>
-         {Object.keys(groupedByService).length > 0 ? (
-          Object.entries(groupedByService).map(([service, candidates]) => (
-          <React.Fragment key={service}>
-          {/* Service Group Header */}
-         <tr>
-          <td colSpan="6" style={{ background: "#e5e7eb", fontWeight: "bold", padding: "0.75rem 1rem" }}>
+           <tbody>
+  {Object.keys(groupedByService).length > 0 ? (
+    Object.entries(groupedByService).map(([service, candidates]) => (
+      <React.Fragment key={service}>
+        {/* Group Wrapper for Spacing */}
+        <tr>
+          <td colSpan="6" style={{ height: "30px" }}></td>
+        </tr>
+
+        {/* Service Group Header */}
+        <tr>
+          <td
+            colSpan="6"
+            style={{
+              background: "linear-gradient(90deg, #3b82f6, #2563eb)",
+              color: "white",
+              fontWeight: "700",
+              fontSize: "1.1rem",
+              padding: "1rem 1.25rem",
+              borderRadius: "12px 12px 0 0",
+              boxShadow: "0 3px 8px rgba(0,0,0,0.1)",
+              textTransform: "capitalize",
+              letterSpacing: "0.5px",
+            }}
+          >
             {service}
           </td>
-          </tr>
+        </tr>
 
         {/* Candidates in this service */}
-        {candidates.slice(startIndex, startIndex + candidatesPerPage).map((c) => (
-          <tr key={c._id}>
+        {candidates.slice(startIndex, startIndex + candidatesPerPage).map((c, idx) => (
+          <tr
+            key={c._id}
+            style={{
+              backgroundColor: idx % 2 === 0 ? "#f9fafb" : "#f3f4f6",
+              transition: "background 0.3s ease",
+            }}
+            onMouseEnter={(e) => (e.currentTarget.style.backgroundColor = "#e0f2fe")}
+            onMouseLeave={(e) =>
+              (e.currentTarget.style.backgroundColor = idx % 2 === 0 ? "#f9fafb" : "#f3f4f6")
+            }
+          >
             <td style={styles.td}>{c.fullName}</td>
             <td style={styles.td}>{c.email}</td>
             <td style={styles.td}>{c.phone || "-"}</td>
             <td style={styles.td}>{c.service || c.poste || "-"}</td>
-            <td style={styles.td}>{c.interestedCountries?.length ? c.interestedCountries.join(", ") : "-"}</td>
             <td style={styles.td}>
-              <button style={styles.btnView} onClick={() => setSelectedCandidate(c)}>View</button>
+              {c.interestedCountries?.length ? c.interestedCountries.join(", ") : "-"}
             </td>
-           </tr>
+            <td style={styles.td}>
+              <button
+                style={{
+                  ...styles.btnView,
+                  background: "linear-gradient(90deg, #2563eb, #3b82f6)",
+                  color: "white",
+                  padding: "6px 12px",
+                  borderRadius: "8px",
+                  fontSize: "0.9rem",
+                }}
+                onMouseEnter={(e) => (e.target.style.opacity = "0.85")}
+                onMouseLeave={(e) => (e.target.style.opacity = "1")}
+                onClick={() => setSelectedCandidate(c)}
+              >
+                View
+              </button>
+            </td>
+          </tr>
         ))}
-          </React.Fragment>
-            ))
-          ) : (
-         <tr>
-          <td colSpan="6" style={{ textAlign: "center", padding: "1rem" }}>No candidates found.</td>
-         </tr>
-          )}
-         </tbody>
+
+        {/* Group Footer for Rounded Corners */}
+        <tr>
+          <td
+            colSpan="6"
+            style={{
+              background: "white",
+              borderBottom: "3px solid #dbeafe",
+              height: "20px",
+              borderRadius: "0 0 12px 12px",
+            }}
+          ></td>
+        </tr>
+      </React.Fragment>
+    ))
+  ) : (
+    <tr>
+      <td colSpan="6" style={{ textAlign: "center", padding: "1rem" }}>
+        No candidates found.
+      </td>
+    </tr>
+  )}
+</tbody>
+
 
           </table>
         </div>
