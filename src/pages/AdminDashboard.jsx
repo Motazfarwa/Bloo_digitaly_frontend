@@ -194,7 +194,6 @@ const AdminDashboard = () => {
       <div style={{ lineHeight: "1.8", fontSize: "1rem", marginBottom: "20px" }}>
         <p><strong>Email:</strong> {selectedCandidate.email}</p>
         <p><strong>Phone:</strong> {selectedCandidate.phone || "N/A"}</p>
-        <p><strong>Service:</strong> {selectedCandidate.poste || "N/A"}</p>
         <p>
           <strong>LinkedIn:</strong>{" "}
           {selectedCandidate.linkedin ? (
