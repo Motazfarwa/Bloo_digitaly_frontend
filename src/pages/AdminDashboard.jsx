@@ -143,37 +143,226 @@ const AdminDashboard = () => {
       </div>
 
       {/* Candidate Modal */}
-      {selectedCandidate && (
-        <div style={styles.modalBackdrop} onClick={() => setSelectedCandidate(null)}>
-          <div style={styles.modal} onClick={(e) => e.stopPropagation()}>
-            <h2 style={styles.modalTitle}>{selectedCandidate.fullName}</h2>
-            <p><strong>Email:</strong> {selectedCandidate.email}</p>
-            <p><strong>Phone:</strong> {selectedCandidate.phone || "N/A"}</p>
-            <p><strong>Service:</strong> {selectedCandidate.poste || "N/A"}</p>
-            <p><strong>LinkedIn:</strong> {selectedCandidate.linkedin ? <a href={selectedCandidate.linkedin} target="_blank" rel="noreferrer">{selectedCandidate.linkedin}</a> : "N/A"}</p>
-            <p><strong>Message:</strong> {selectedCandidate.message || "No message provided."}</p>
+{selectedCandidate && (
+  <div
+    style={{
+      position: "fixed",
+      top: 0,
+      left: 0,
+      width: "100vw",
+      height: "100vh",
+      background: "rgba(0,0,0,0.5)",
+      backdropFilter: "blur(6px)",
+      display: "flex",
+      alignItems: "center",
+      justifyContent: "center",
+      zIndex: 1000,
+      animation: "fadeIn 0.3s ease-in-out",
+    }}
+    onClick={() => setSelectedCandidate(null)}
+  >
+    <div
+      style={{
+        background: "linear-gradient(135deg, #ffffff, #f8fafc)",
+        borderRadius: "20px",
+        padding: "30px 40px",
+        width: "90%",
+        maxWidth: "700px",
+        boxShadow: "0 10px 30px rgba(0, 0, 0, 0.2)",
+        position: "relative",
+        color: "#1e293b",
+        animation: "slideUp 0.4s ease",
+      }}
+      onClick={(e) => e.stopPropagation()}
+    >
+      {/* Close Button */}
+      <button
+        onClick={() => setSelectedCandidate(null)}
+        style={{
+          position: "absolute",
+          top: "15px",
+          right: "15px",
+          background: "transparent",
+          border: "none",
+          fontSize: "22px",
+          cursor: "pointer",
+          color: "#64748b",
+          transition: "color 0.3s ease",
+        }}
+        onMouseEnter={(e) => (e.target.style.color = "#2563eb")}
+        onMouseLeave={(e) => (e.target.style.color = "#64748b")}
+      >
+        ✕
+      </button>
 
-            <h3>Uploaded Files</h3>
-            {selectedCandidate.files?.length ? selectedCandidate.files.map((file, idx) => (
-              <div key={idx} style={styles.fileItem}>
-                <p><strong>File:</strong> {file.filename}</p>
-                <p><strong>Type:</strong> {file.contentType}</p>
-                <div style={styles.fileActions}>
-                  <button style={styles.btnView}  onClick={() =>
-                 setPreviewFile({
-                  url: `${process.env.REACT_APP_API_URL}/uploads/${file.filename}`,
-                  type: file.contentType,
-                 name: file.filename
+      {/* Candidate Title */}
+      <h2
+        style={{
+          textAlign: "center",
+          fontSize: "1.8rem",
+          fontWeight: "600",
+          marginBottom: "20px",
+          color: "#0f172a",
+          borderBottom: "2px solid #e2e8f0",
+          paddingBottom: "10px",
+        }}
+      >
+        {selectedCandidate.fullName}
+      </h2>
+
+      {/* Candidate Info */}
+      <div style={{ lineHeight: "1.8", fontSize: "1rem", marginBottom: "20px" }}>
+        <p><strong>Email:</strong> {selectedCandidate.email}</p>
+        <p><strong>Phone:</strong> {selectedCandidate.phone || "N/A"}</p>
+        <p><strong>Service:</strong> {selectedCandidate.poste || "N/A"}</p>
+        <p>
+          <strong>LinkedIn:</strong>{" "}
+          {selectedCandidate.linkedin ? (
+            <a
+              href={selectedCandidate.linkedin}
+              target="_blank"
+              rel="noreferrer"
+              style={{
+                color: "#2563eb",
+                textDecoration: "none",
+                fontWeight: "500",
+              }}
+              onMouseEnter={(e) => (e.target.style.textDecoration = "underline")}
+              onMouseLeave={(e) => (e.target.style.textDecoration = "none")}
+            >
+              {selectedCandidate.linkedin}
+            </a>
+          ) : (
+            "N/A"
+          )}
+        </p>
+        <p><strong>Message:</strong> {selectedCandidate.message || "No message provided."}</p>
+      </div>
+
+      {/* Uploaded Files */}
+      <h3
+        style={{
+          fontSize: "1.3rem",
+          fontWeight: "600",
+          marginBottom: "10px",
+          color: "#1e3a8a",
+        }}
+      >
+        Uploaded Files
+      </h3>
+
+      {selectedCandidate.files?.length ? (
+        selectedCandidate.files.map((file, idx) => (
+          <div
+            key={idx}
+            style={{
+              background: "#f1f5f9",
+              borderRadius: "12px",
+              padding: "15px 20px",
+              marginBottom: "10px",
+              boxShadow: "inset 0 1px 2px rgba(0,0,0,0.05)",
+              display: "flex",
+              flexDirection: "column",
+              gap: "6px",
+            }}
+          >
+            <p style={{ margin: 0 }}>
+              <strong>File:</strong> {file.filename}
+            </p>
+            <p style={{ margin: 0 }}>
+              <strong>Type:</strong> {file.contentType}
+            </p>
+
+            <div
+              style={{
+                display: "flex",
+                gap: "10px",
+                marginTop: "10px",
+              }}
+            >
+              <button
+                style={{
+                  background: "linear-gradient(90deg, #2563eb, #3b82f6)",
+                  border: "none",
+                  borderRadius: "10px",
+                  color: "white",
+                  padding: "8px 16px",
+                  fontSize: "0.95rem",
+                  cursor: "pointer",
+                  fontWeight: "500",
+                  transition: "all 0.3s ease",
+                }}
+                onMouseEnter={(e) =>
+                  (e.target.style.background = "linear-gradient(90deg, #1d4ed8, #2563eb)")
+                }
+                onMouseLeave={(e) =>
+                  (e.target.style.background = "linear-gradient(90deg, #2563eb, #3b82f6)")
+                }
+                onClick={() =>
+                  setPreviewFile({
+                    url: `${process.env.REACT_APP_API_URL}/uploads/${file.filename}`,
+                    type: file.contentType,
+                    name: file.filename,
                   })
-               }>Preview</button>
-                  <a href={`${process.env.REACT_APP_API_URL.replace(/\/$/, "")}/${file.path}`} download={file.filename} style={styles.btnDownload}>Download</a>
-                </div>
-              </div>
-            )) : <p>No documents uploaded.</p>}
-            <button style={styles.btnClose} onClick={() => setSelectedCandidate(null)}>Close</button>
+                }
+              >
+                👁️ Preview
+              </button>
+
+              <a
+                href={`${process.env.REACT_APP_API_URL.replace(/\/$/, "")}/${file.path}`}
+                download={file.filename}
+                style={{
+                  background: "linear-gradient(90deg, #16a34a, #22c55e)",
+                  color: "white",
+                  padding: "8px 16px",
+                  borderRadius: "10px",
+                  fontSize: "0.95rem",
+                  fontWeight: "500",
+                  textDecoration: "none",
+                  display: "inline-block",
+                  transition: "all 0.3s ease",
+                }}
+                onMouseEnter={(e) =>
+                  (e.target.style.background = "linear-gradient(90deg, #15803d, #16a34a)")
+                }
+                onMouseLeave={(e) =>
+                  (e.target.style.background = "linear-gradient(90deg, #16a34a, #22c55e)")
+                }
+              >
+                ⬇ Download
+              </a>
+            </div>
           </div>
-        </div>
+        ))
+      ) : (
+        <p style={{ color: "#475569" }}>No documents uploaded.</p>
       )}
+
+      {/* Close Button */}
+      <div style={{ textAlign: "center", marginTop: "25px" }}>
+        <button
+          onClick={() => setSelectedCandidate(null)}
+          style={{
+            background: "#e2e8f0",
+            color: "#1e293b",
+            border: "none",
+            borderRadius: "12px",
+            padding: "10px 25px",
+            cursor: "pointer",
+            fontWeight: "500",
+            transition: "background 0.3s ease",
+          }}
+          onMouseEnter={(e) => (e.target.style.background = "#cbd5e1")}
+          onMouseLeave={(e) => (e.target.style.background = "#e2e8f0")}
+        >
+          Close
+        </button>
+      </div>
+    </div>
+  </div>
+)}
+
 
       {/* File Preview Modal */}
        {previewFile && (
