@@ -6,6 +6,7 @@ import bloo3 from "../assets/bloo3.jpg";
 import bloo4 from "../assets/bloo4.jpg";
 import bloo5 from "../assets/bloo5.jpg";
 import bloo6 from "../assets/bloo6.jpg";
+import oumaima from "../assets/oumaima.png";
 import logo from "../assets/logo.jpg";
 
 const Homepage = () => {
@@ -241,58 +242,36 @@ const handleSubmit = async (e) => {
       </nav>
 
       {/* Enhanced Home Section */}
-      <section id="Home" className="Home" ref={sectionRefs.Home}>
-        <div className="Home-background">
-          <div className="floating-shapes">
-            <div className="shape shape-1"></div>
-            <div className="shape shape-2"></div>
-            <div className="shape shape-3"></div>
-          </div>
-        </div>
-        <div className="Home-content">
-          <div className="Home-text">
-            <h1 className="Home-title">
-              <span className="title-line">Bloo</span>
-              <span className="title-line accent">Digitally</span>
-            </h1>
-            <p className="Home-subtitle">
-              Empowering your career and train global education dreams-expert 
-            </p>
+<section id="Home" className="home-section">
+  <div className="home-content">
+    <div className="text-content">
+      <h1 className="title">
+        HR MANAGERS
+      </h1>
+      <div className="highlight">DOLOR FITBOREN GOT</div>
+      
+      <h2 className="subtitle-heading">MEETING PEOPLE</h2>
+      <p className="subtitle">
+        Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam, quis nostrud
+      </p>
+      <div className="buttons">
+        <button className="btn primary-btn">NEXT PAGE</button>
+      </div>
+    </div>
 
-             <p className="Home-subtitle">
-              Guidance in job placement and study aboard opportunities
-            </p>
-            <div className="Home-buttons">
-              <a href="#contact" className="btn-primary pulse">
-                Get Started
-              </a>
-              <a href="#about" className="btn-secondary">
-                Learn More
-              </a>
-            </div>
-          </div>
-<div className="Home-visual">
-  <img src={bloo1} alt="Digital Consulting" className="Home-img" />
-
-  <div className="floating-card card-1" onClick={() => scrollToService("Study Abroad")}>
-    <span>🚀 Study Abroad Scholarship Inscription</span>
+    <div className="image-content">
+      <div class="animated-text-container">
+     <div class="animated-text">Career Growth</div>
+    
+       </div>
+      <div className="image-wrapper">
+        <img src={oumaima} alt="HR Managers Meeting" className="main-image" />
+      </div>
+    </div>
   </div>
 
-  <div className="floating-card card-2" onClick={() => scrollToService("Job Search")}>
-    <span>💼 Job Search Consulting</span>
-  </div>
-
-  <div className="floating-card card-3" onClick={() => scrollToService("Volunteer Registration")}>
-    <span>🌍 GTraining Canadian American Diplomat</span>
-  </div>
-</div>
-
-
-        </div>
-        <div className="scroll-indicator">
-          <div className="scroll-arrow"></div>
-        </div>
-      </section>
+  <div className="curved-background"></div>
+</section>
 
       {/* Enhanced About Section */}
       <section id="about" className="about" ref={sectionRefs.about}>
@@ -430,36 +409,36 @@ const handleSubmit = async (e) => {
       </section>
 
       {/* Enhanced Statistics Section */}
-      <section className="statistics">
-        <div className="container">
-          <div className="section-header">
-            <h2 className="section-title">Our Achievements</h2>
-            <div className="section-divider"></div>
-          </div>
-          <div className="stats-grid">
-            <div className="stat-card">
-              <div className="stat-icon">🚀</div>
-              <h3 data-count="500">500+</h3>
-              <p>Projects Completed</p>
-            </div>
-            <div className="stat-card">
-              <div className="stat-icon">😊</div>
-              <h3 data-count="120">120+</h3>
-              <p>Happy Clients</p>
-            </div>
-            <div className="stat-card">
-              <div className="stat-icon">📅</div>
-              <h3 data-count="5">5+</h3>
-              <p>Years of Experience</p>
-            </div>
-            <div className="stat-card">
-              <div className="stat-icon">🏆</div>
-              <h3 data-count="10">10+</h3>
-              <p>Awards Won</p>
-            </div>
-          </div>
-        </div>
-      </section>
+<section className="statistics">
+  <div className="container">
+    <div className="section-header">
+      <h2 className="section-title">Our Achievements</h2>
+      <div className="section-divider"></div>
+    </div>
+    <div className="stats-grid">
+      <div className="stat-card">
+        <div className="stat-icon">🚀</div>
+        <h3 data-count="500">0+</h3>
+        <p>Projects Completed</p>
+      </div>
+      <div className="stat-card">
+        <div className="stat-icon">😊</div>
+        <h3 data-count="120">0+</h3>
+        <p>Happy Clients</p>
+      </div>
+      <div className="stat-card">
+        <div className="stat-icon">📅</div>
+        <h3 data-count="5">0+</h3>
+        <p>Years of Experience</p>
+      </div>
+      <div className="stat-card">
+        <div className="stat-icon">🏆</div>
+        <h3 data-count="10">0+</h3>
+        <p>Awards Won</p>
+      </div>
+    </div>
+  </div>
+</section>
 
       {/* Enhanced Contact Section */}
 {/* Enhanced Contact Section */}
