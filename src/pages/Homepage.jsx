@@ -5,7 +5,9 @@ import bloo2 from "../assets/bloo2.jpg";
 import bloo3 from "../assets/bloo3.jpg";
 import bloo4 from "../assets/bloo4.jpg";
 import bloo5 from "../assets/bloo5.jpg";
-import bloo6 from "../assets/bloo6.jpg";
+import bloo7 from "../assets/574977079_1444377007399317_2606325426251402317_n.jpg";
+import bloo8 from "../assets/575507204_1515328546371730_2615831530752092211_n.jpg";
+import bloo9 from "../assets/578325286_1783420105674860_5480287513607565003_n.jpg";
 import oumaima from "../assets/oumaima.png";
 import logo from "../assets/logo.jpg";
 
@@ -239,7 +241,7 @@ const handleSubmit = async (e) => {
       alignItems: "center",
       justifyContent: "space-between", // logo left, links center
       width: "100%",
-      maxWidth: "2000px",
+    
     }}
   >
     {/* Logo */}
@@ -263,7 +265,7 @@ const handleSubmit = async (e) => {
       />
       <span
         style={{
-          color: "#333",
+          color: "#ebebebff",
           fontWeight: "600",
           fontSize: "1.2rem",
           letterSpacing: "0.5px",
@@ -274,18 +276,19 @@ const handleSubmit = async (e) => {
     </div>
 
     {/* Centered Navigation Links */}
-    <ul
-      className={`nav-links ${menuOpen ? "nav-active" : ""}`}
-      style={{
-        display: "flex",
-        listStyle: "none",
-        gap: "35px",
-        margin: 0,
-        padding: 0,
-        flex: "2", // give it more space
-        justifyContent: "center", // center links
-      }}
-    >
+<ul
+  className={`nav-links ${menuOpen ? "nav-active" : ""}`}
+  style={{
+    display: "flex",
+    listStyle: "none",
+    gap: "35px",
+    margin: 0,
+    padding: 0,
+    flex: "2",
+    justifyContent: "center",
+    transform: "translateX(-250px)", // 👈 move links to the left
+  }}
+>
       {["Home", "about", "services", "portfolio", "contact"].map((section) => (
         <li key={section}>
           <a
@@ -294,7 +297,7 @@ const handleSubmit = async (e) => {
             style={{
               color: activeSection === section ? "#fdffffff" : "#f1f1f1ff",
               textDecoration: "none",
-              fontWeight: "500",
+              fontWeight: "bold",
               fontSize: "1rem",
               transition: "all 0.3s ease",
               padding: "8px 14px",
@@ -304,11 +307,8 @@ const handleSubmit = async (e) => {
                   ? "rgba(0, 188, 212, 0.15)"
                   : "transparent",
             }}
-            onMouseEnter={(e) => (e.target.style.color = "#000000ff")}
-            onMouseLeave={(e) =>
-              (e.target.style.color =
-                activeSection === section ? "#11120eff" : "#333")
-            }
+            
+         
           >
             {section.charAt(0).toUpperCase() + section.slice(1)}
           </a>
@@ -333,7 +333,7 @@ const handleSubmit = async (e) => {
       
       <h2 className="subtitle-heading">MEETING PEOPLE</h2>
       <p className="subtitle">
-        Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam, quis nostrud
+       Empowering your career and train global education dreams- expert guidance in job placement and study aboard opportunities
       </p>
   
     </div>
@@ -341,11 +341,13 @@ const handleSubmit = async (e) => {
     <div className="image-content">
       <div class="animated-text-container">
      <div class="animated-text">Career Growth</div>
-    
        </div>
+        <div className="curved-backgroundd"></div>
       <div className="image-wrapper">
+        
         <img src={oumaima} alt="HR Managers Meeting" className="main-image" />
       </div>
+       
     </div>
   </div>
 
@@ -406,7 +408,7 @@ const handleSubmit = async (e) => {
           </div>
           <div className="service-carousel">
             <div className="service-track">
-              {[1, 2, 3, 1, 2, 3].map((item, index) => (
+              {[1, 2, 3, 2].map((item, index) => (
                 <div className="card" key={index}>
                   <div className="card-icon">💼</div>
                   <img src={item === 1 ? bloo3 : item === 2 ? bloo4 : bloo5} alt={`Service ${item}`} />
@@ -434,7 +436,7 @@ const handleSubmit = async (e) => {
             <div className="section-divider"></div>
           </div>
           <div className="portfolio-grid">
-            {[bloo3, bloo4, bloo5, bloo2].map((img, index) => (
+            {[bloo3, bloo4, bloo5, bloo2,bloo1,bloo8].map((img, index) => (
               <div className="portfolio-item" key={index}>
                 <img src={img} alt={`Portfolio ${index + 1}`} />
                 <div className="portfolio-overlay">
@@ -491,28 +493,28 @@ const handleSubmit = async (e) => {
 <section className="statistics">
   <div className="container">
     <div className="section-header">
-      <h2 className="section-title">Our Achievements</h2>
+      <h2 className="section-title" style={{color:'black'}}>Our Achievements</h2>
       <div className="section-divider"></div>
     </div>
     <div className="stats-grid">
       <div className="stat-card">
         <div className="stat-icon">🚀</div>
-        <h3 data-count="500">0+</h3>
+      
         <p>Projects Completed</p>
       </div>
       <div className="stat-card">
         <div className="stat-icon">😊</div>
-        <h3 data-count="120">0+</h3>
+        
         <p>Happy Clients</p>
       </div>
       <div className="stat-card">
         <div className="stat-icon">📅</div>
-        <h3 data-count="5">0+</h3>
+        
         <p>Years of Experience</p>
       </div>
       <div className="stat-card">
         <div className="stat-icon">🏆</div>
-        <h3 data-count="10">0+</h3>
+     
         <p>Awards Won</p>
       </div>
     </div>
