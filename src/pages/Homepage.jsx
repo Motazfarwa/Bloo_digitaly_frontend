@@ -211,42 +211,123 @@ const handleSubmit = async (e) => {
 };
 
   return (
-    <div className="homepage">
-      {/* Enhanced Navbar */}
-      <nav className={`navbar ${scroll ? "navbar-scrolled" : ""}`}>
-        <div className="navbar-container">
-          <div className="logo-container">
-            <img src={logo} alt="Bloo Digitally" className="logo-img" />
-            <span className="logo-text">Bloo Digitally</span>
-          </div>
+    <div>
+          {/* Enhanced Navbar */}
+<nav
+  style={{
+    position: "fixed",
+    top: 0,
+    left: 0,
+    width: "100%",
+    padding: "15px 8%",
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
+    zIndex: 1000,
+    background: "rgba(230, 230, 230, 0.25)",
+    backdropFilter: "blur(12px)",
+    WebkitBackdropFilter: "blur(12px)",
+    boxShadow: "0 4px 20px rgba(0, 0, 0, 0.05)",
+    borderBottom: "1px solid rgba(255,255,255,0.3)",
+    transition: "all 0.3s ease-in-out",
+  }}
+>
+  <div
+    className="navbar-container"
+    style={{
+      display: "flex",
+      alignItems: "center",
+      justifyContent: "space-between", // logo left, links center
+      width: "100%",
+      maxWidth: "2000px",
+    }}
+  >
+    {/* Logo */}
+    <div
+      className="logo-container"
+      style={{
+        display: "flex",
+        alignItems: "center",
+        gap: "20px",
+        flex: "1", // keep logo on left
+      }}
+    >
+      <img
+        src={logo}
+        alt="Bloo Digitally"
+        style={{
+          width: "40px",
+          height: "40px",
+          borderRadius: "50%",
+        }}
+      />
+      <span
+        style={{
+          color: "#333",
+          fontWeight: "600",
+          fontSize: "1.2rem",
+          letterSpacing: "0.5px",
+        }}
+      >
+        Bloo Digitally
+      </span>
+    </div>
 
-          <ul className={`nav-links ${menuOpen ? "nav-active" : ""}`}>
-            {['Home', 'about', 'services', 'portfolio', 'contact'].map(section => (
-              <li key={section}>
-                <a 
-                  href={`#${section}`} 
-                  className={activeSection === section ? 'active' : ''}
-                >
-                  {section.charAt(0).toUpperCase() + section.slice(1)}
-                </a>
-              </li>
-            ))}
-          </ul>
+    {/* Centered Navigation Links */}
+    <ul
+      className={`nav-links ${menuOpen ? "nav-active" : ""}`}
+      style={{
+        display: "flex",
+        listStyle: "none",
+        gap: "35px",
+        margin: 0,
+        padding: 0,
+        flex: "2", // give it more space
+        justifyContent: "center", // center links
+      }}
+    >
+      {["Home", "about", "services", "portfolio", "contact"].map((section) => (
+        <li key={section}>
+          <a
+            href={`#${section}`}
+            className={activeSection === section ? "active" : ""}
+            style={{
+              color: activeSection === section ? "#fdffffff" : "#f1f1f1ff",
+              textDecoration: "none",
+              fontWeight: "500",
+              fontSize: "1rem",
+              transition: "all 0.3s ease",
+              padding: "8px 14px",
+              borderRadius: activeSection === section ? "20px" : "0",
+              background:
+                activeSection === section
+                  ? "rgba(0, 188, 212, 0.15)"
+                  : "transparent",
+            }}
+            onMouseEnter={(e) => (e.target.style.color = "#000000ff")}
+            onMouseLeave={(e) =>
+              (e.target.style.color =
+                activeSection === section ? "#11120eff" : "#333")
+            }
+          >
+            {section.charAt(0).toUpperCase() + section.slice(1)}
+          </a>
+        </li>
+      ))}
+    </ul>
+  </div>
+</nav>
 
-          <div className={`mobile-menu-icon ${menuOpen ? "menu-open" : ""}`} onClick={toggleMenu}>
-            <span></span>
-            <span></span>
-            <span></span>
-          </div>
-        </div>
-      </nav>
+
+      <div className="homepage">
+
 
       {/* Enhanced Home Section */}
 <section id="Home" className="home-section">
   <div className="home-content">
     <div className="text-content">
       <h1 className="title">
-        HR MANAGERS
+        Bloo Digitally
       </h1>
       <div className="highlight">DOLOR FITBOREN GOT</div>
       
@@ -254,9 +335,7 @@ const handleSubmit = async (e) => {
       <p className="subtitle">
         Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam, quis nostrud
       </p>
-      <div className="buttons">
-        <button className="btn primary-btn">NEXT PAGE</button>
-      </div>
+  
     </div>
 
     <div className="image-content">
@@ -305,7 +384,7 @@ const handleSubmit = async (e) => {
               </div>
             </div>
             <div className="about-visual">
-              <img src={bloo6} alt="About Us" className="about-img" />
+              <img src={bloo1} alt="About Us" className="about-img" />
               <div className="experience-badge">
                 <span className="years">1+</span>
                 <span className="text">Job Search</span>
@@ -753,6 +832,8 @@ const handleSubmit = async (e) => {
         </div>
       </footer>
     </div>
+    </div>
+ 
   );
 };
 
