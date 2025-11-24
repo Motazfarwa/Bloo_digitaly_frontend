@@ -10,7 +10,7 @@ import bloo8 from "../assets/575507204_1515328546371730_2615831530752092211_n.jp
 import bloo9 from "../assets/578325286_1783420105674860_5480287513607565003_n.jpg";
 import oumaima from "../assets/oumaima.png";
 import logo from "../assets/logo.jpg";
-
+import Swal from 'sweetalert2';
 const Homepage = () => {
   const [formData, setFormData] = useState({
     fullName: "",
@@ -144,18 +144,103 @@ const handleChange = (e) => {
 };
 
 const handleFileChange = (e) => {
-  const newFiles = Array.from(e.target.files); // get new selected files
-  setFormData((prev) => ({
-    ...prev,
-    files: [...(prev.files || []), ...newFiles], // merge with existing
-  }));
-  e.target.value = null; // reset input to allow selecting the same file again
-};
+  const newFiles = Array.from(e.target.files);
+  const MAX_FILES = 5;
+  const MAX_FILE_SIZE = 30 * 1024 * 1024;
 
+  const currentFileCount = formData.files ? formData.files.length : 0;
+  if (currentFileCount + newFiles.length > MAX_FILES) {
+    Swal.fire({
+      title: 'Too Many Files',
+      text: `Maximum ${MAX_FILES} files allowed. You currently have ${currentFileCount} files.`,
+      icon: 'warning',
+      confirmButtonText: 'OK',
+      confirmButtonColor: '#ffa500',
+    });
+    e.target.value = null;
+    return;
+  }
+
+  const validFiles = [];
+  const invalidFiles = [];
+
+  newFiles.forEach(file => {
+    if (file.size > MAX_FILE_SIZE) {
+      invalidFiles.push(`${file.name} (${(file.size / (1024 * 1024)).toFixed(1)}MB)`);
+      return;
+    }
+
+    const allowedTypes = [
+      'application/pdf', 
+      'image/jpeg', 
+      'image/jpg', 
+      'image/png',
+      'application/msword',
+      'application/vnd.openxmlformats-officedocument.wordprocessingml.document'
+    ];
+    
+    if (!allowedTypes.includes(file.type)) {
+      invalidFiles.push(`${file.name} (invalid type)`);
+      return;
+    }
+
+    validFiles.push(file);
+  });
+
+  if (invalidFiles.length > 0) {
+    Swal.fire({
+      title: 'Some Files Were Rejected',
+      html: `
+        <div style="text-align: left;">
+          <p><strong>The following files couldn't be added:</strong></p>
+          <ul>
+            ${invalidFiles.map(file => `<li>${file}</li>`).join('')}
+          </ul>
+          <p>Please ensure files are under 30MB and in supported formats.</p>
+        </div>
+      `,
+      icon: 'warning',
+      confirmButtonText: 'OK',
+      confirmButtonColor: '#ffa500',
+    });
+  }
+
+  if (validFiles.length > 0) {
+    setFormData((prev) => ({
+      ...prev,
+      files: [...(prev.files || []), ...validFiles],
+    }));
+
+    // Success message for valid files
+    if (validFiles.length > 0) {
+      Swal.fire({
+        title: 'Files Added!',
+        text: `${validFiles.length} file(s) successfully added.`,
+        icon: 'success',
+        timer: 2000,
+        showConfirmButton: false,
+        toast: true,
+        position: 'top-end',
+      });
+    }
+  }
+
+  e.target.value = null;
+};
   // Handle form submit
 const handleSubmit = async (e) => {
   e.preventDefault();
   setIsSubmitting(true);
+
+  // Show loading alert
+  Swal.fire({
+    title: 'Submitting...',
+    text: 'Please wait while we process your application',
+    allowOutsideClick: false,
+    didOpen: () => {
+      Swal.showLoading();
+    }
+  });
 
   const data = new FormData();
 
@@ -179,34 +264,56 @@ const handleSubmit = async (e) => {
 
   try {
     const res = await fetch(`${process.env.REACT_APP_API_URL}/send-email`, {
-     method: "POST",
-     body: data,
-     });
-    const result = await res.json();
-    alert(result.message);
-
-    // Reset form
-    setFormData({
-      fullName: "",
-      email: "",
-      phone: "",
-      linkedin: "",
-      message: "",
-      resume: null,
-      cin: null,
-      passport: null,
-      poste: "",
-      frenchLevel: "",
-      englishLevel: "",
-      interestedCountries: "",
-      dateNaissance: "",
-      acceptTerms: false,
-      files: [], // reset files
-      service: "",
+      method: "POST",
+      body: data,
     });
+    
+    const result = await res.json();
+
+    if (res.ok) {
+      // Success alert
+      Swal.fire({
+        title: 'Success!',
+        text: result.message || 'Your application has been submitted successfully!',
+        icon: 'success',
+        confirmButtonText: 'OK',
+        confirmButtonColor: '#00bcd4',
+      });
+
+      // Reset form
+      setFormData({
+        fullName: "",
+        email: "",
+        phone: "",
+        linkedin: "",
+        message: "",
+        resume: null,
+        cin: null,
+        passport: null,
+        poste: "",
+        frenchLevel: "",
+        englishLevel: "",
+        interestedCountries: "",
+        dateNaissance: "",
+        acceptTerms: false,
+        files: [],
+        service: "",
+      });
+    } else {
+      // Error alert from server
+      throw new Error(result.message || 'Failed to submit form');
+    }
   } catch (err) {
     console.error(err);
-    alert("Failed to submit form. Please try again.");
+    
+    // Error alert
+    Swal.fire({
+      title: 'Error!',
+      text: err.message || 'Failed to submit form. Please try again.',
+      icon: 'error',
+      confirmButtonText: 'Try Again',
+      confirmButtonColor: '#ff6b6b',
+    });
   } finally {
     setIsSubmitting(false);
   }
@@ -782,25 +889,25 @@ const handleSubmit = async (e) => {
             I accept the terms and conditions of job search consulting service and inscription
           </label>
 
-          <button
-            type="submit"
-            className={`btn-primary ${isSubmitting ? "submitting" : ""}`}
-            disabled={isSubmitting || !!dobError}
-          >
-            {isSubmitting ? (
-              <>
-                <div className="spinner"></div>
-                Sending...
-              </>
-            ) : (
-              "Send Message"
-            )}
+        <button
+         type="submit"
+         className={`btn-primary ${isSubmitting ? "submitting" : ""}`}
+         disabled={isSubmitting || !!dobError || (formData.files && formData.files.some(file => file.size > 30 * 1024 * 1024))}
+        >
+         {isSubmitting ? (
+            <>
+          <div className="spinner"></div>
+           Submitting...
+           </>
+           ) : (
+          "Submit Application"
+         )}
           </button>
         </>
-      )}
-    </form>
-  </div>
-</section>
+         )}
+        </form>
+       </div>
+        </section>
 
 
       {/* Enhanced Footer */}
